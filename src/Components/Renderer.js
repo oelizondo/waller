@@ -3,6 +3,7 @@ import { getPhotos } from '../api/unsplash'
 import Wallpaper from './Wallpaper'
 import Package from './Package'
 import Navigation from './Navigation'
+import Finished from './Finished'
 
 class Renderer extends Component {
   constructor() {
@@ -26,6 +27,7 @@ class Renderer extends Component {
     this.nextWallpaper = this.nextWallpaper.bind(this)
     this.likeWallpaper = this.likeWallpaper.bind(this)
     this.finishStream  = this.finishStream.bind(this)
+    this.resetStream   = this.resetStream.bind(this)
   }
 
   async fetchWallpaperBatch(page) {
@@ -68,6 +70,11 @@ class Renderer extends Component {
     this.setState({finished: true})
   }
 
+  resetStream() {
+    this.setState({likedWallpapers: []})
+    this.fetchWallpaperBatch(this.state.iterator)
+  }
+
   async componentDidMount() {
     const page = this.state.iterator
     await this.fetchWallpaperBatch(page)
@@ -78,8 +85,8 @@ class Renderer extends Component {
     const regular = wallpaper.urls.regular
     const component = this.state.finished ? Package(this.state.likedWallpapers) : Wallpaper(regular)
     const navigation = this.state.finished ?
-    <p>Downloading</p> :
-    <Navigation nextWallpaper={this.nextWallpaper} likeWallpaper={this.likeWallpaper} finishStream={this.finishStream} />
+    Finished(this.state.likedWallpapers) :
+    <Navigation nextWallpaper={this.nextWallpaper} likeWallpaper={this.likeWallpaper} finishStream={this.finishStream} resetStream={this.resetStream} />
 
     return (
       <div className="renderer">

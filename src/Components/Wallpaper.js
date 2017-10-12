@@ -2,7 +2,7 @@ import React from 'react'
 
 const Wallpaper = (regularDisplay) => {
   return (
-    <a href={regularDisplay}>
+    <a>
       <img src={regularDisplay} alt="Loading" className="displayImage" />
     </a>
   )

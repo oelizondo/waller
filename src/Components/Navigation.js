@@ -7,6 +7,7 @@ class Navigation extends Component {
         <button onClick={this.props.nextWallpaper}> Dismiss </button>
         <button onClick={this.props.finishStream}> Finish </button>
         <button onClick={this.props.likeWallpaper}> Like </button>
+        <button onClick={this.props.resetStream}> Reset </button>
       </div>
     )
   }
