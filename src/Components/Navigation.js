@@ -1,16 +1,12 @@
 import React, { Component } from 'react'
 
-class Navigation extends Component {
-  render () {
-    return (
-      <div className="buttonsection">
-        <button onClick={this.props.nextWallpaper}> Dismiss </button>
-        <button onClick={this.props.finishStream}> Finish </button>
-        <button onClick={this.props.likeWallpaper}> Like </button>
-        <button onClick={this.props.resetStream}> Reset </button>
-      </div>
-    )
-  }
+export default function({nextWallpaper, finishStream, likeWallpaper, resetStream}) {
+  return (
+    <div className="buttonsection">
+      <button onClick={nextWallpaper}> Dismiss </button>
+      <button onClick={finishStream}> Finish </button>
+      <button onClick={likeWallpaper}> Like </button>
+      <button onClick={resetStream}> Reset </button>
+    </div>
+  )
 }
-
-export default Navigation

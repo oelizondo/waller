@@ -30,17 +30,22 @@ class Renderer extends Component {
     this.resetStream   = this.resetStream.bind(this)
   }
 
-  async fetchWallpaperBatch(page) {
-    const wallpapers = await getPhotos(page)
-    const wp = wallpapers.pop()
-    this.setState((prevState, props) => {
-      return {
-        wallpapers: wallpapers,
-        chosenWallpaper: wp,
-        length: wallpapers.length,
-        iterator: prevState.iterator + 1
-      }
-    })
+  fetchWallpaperBatch(page) {
+    getPhotos(page)
+      .then(wallpapers => {
+        const wallpaper = wallpapers.pop()
+        return {wallpapers, wallpaper}
+      })
+      .then(({wallpapers, wallpaper}) => {
+        this.setState((prevState, props) => {
+          return {
+            wallpapers: wallpapers,
+            chosenWallpaper: wallpaper,
+            length: wallpapers.length,
+            iterator: prevState.iterator + 1
+          }
+        })
+      })
   }
 
   nextWallpaper() {

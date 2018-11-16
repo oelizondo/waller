@@ -1,15 +1,19 @@
 import Unsplash from 'unsplash-js'
 
 const unsplash = new Unsplash({
-  applicationId: '161331331b029c92fbc4cb5faaff0156af5a4532f39750d50f088fb09d287cf1',
-  secret: '3ac18c5b35f8984290274751ce423c0d7aca2ef8088617e9789a47dd9f842323',
-
+  applicationId: process.env.UNSPLASH_APPLICATION_ID,
+  secret: process.env.UNSPLASH_SECRET
 })
+const perPage = 30
+const type = "lastest"
 
-export async function getPhotos (page) {
-  const photos = await unsplash.photos.listPhotos(page, 30, "latest")
-  .then(res => res.json())
-  .then(json => json)
-  .catch(e => e)
-  return photos
+export function getPhotos (page) {
+  return new Promise((resolve, reject) => {
+    unsplash
+      .photos
+      .listPhotos(page, perPage, type)
+      .then(res => res.json())
+      .then(json => resolve(json))
+      .catch(e => reject(e))
+  })
 }
